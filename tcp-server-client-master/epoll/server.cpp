@@ -68,7 +68,7 @@ void do_epoll(int listenfd)
 	add_event(epollfd, listenfd, EPOLLIN);
 	while(1)
 	{
-		ret = epoll_wait(epollfd, events, EPOLLEVENTS, -1);
+		ret = epoll_wait(epollfd, events, EPOLLEVENTS, -1); // para EPOLLEVENTS means the max connection number 
 		handle_events(epollfd, events, ret, listenfd, buf);
 	}
 	close(epollfd);
