@@ -102,16 +102,18 @@ void exchange_data(int fdin, int idx)
 
 int main(void)
 {
-    memset(clients, 0, sizeof(Client) * MAXCLIENTS);
-    signal(SIGCHLD, SIG_IGN);
+    memset(clients, 0, sizeof(Client) * MAXCLIENTS);  //client struct
+    signal(SIGCHLD, SIG_IGN);  // 忽略子进程结束信号，避免僵尸化
     //signal(SIGPIPE, ) // FIXME
 
     struct addrinfo hints;
     memset(&hints, 0, sizeof(hints));
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE; // use my IP. "| AI_ADDRCONFIG"
+    hints.ai_socktype = SOCK_STREAM;  // 有序可靠双向的面向连接字节流
+    hints.ai_flags = AI_PASSIVE; // use my IP. "| AI_ADDRCONFIG"  // 套接字地址用于监听绑定
+    hints.ai_protocol = 0;
     hints.ai_family = AF_UNSPEC; // AF_INET or AF_INET6 to force version
-    hints.ai_family = AF_INET6; // IPv4 addresses will be like ::ffff:127.0.0.1
+//  hints.ai_family = AF_INET6; // IPv4 addresses will be like ::ffff:127.0.0.1
+//  hints.ai_family = AF_INET;  // 指定为ipv4域
 
     struct addrinfo *servinfo;
     getaddrinfo(NULL, PORT, &hints, &servinfo);

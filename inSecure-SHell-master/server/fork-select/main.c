@@ -148,7 +148,7 @@ int main(void)
     hints.ai_flags = AI_PASSIVE; // use my IP. "| AI_ADDRCONFIG"
     hints.ai_family = AF_UNSPEC; // AF_INET or AF_INET6 to force version
     hints.ai_family = AF_INET6; // IPv4 addresses will be like ::ffff:127.0.0.1
-
+    
     struct addrinfo *servinfo;
     getaddrinfo(NULL, PORT, &hints, &servinfo);
 
