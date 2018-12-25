@@ -17,7 +17,7 @@ using namespace std;
 #define IPADDRESS "127.0.0.1"
 #define SERV_PORT 6666
 #define FDSIZE 1024
-#define EPOLLEVENTS 20
+#define EPOLLEVENTS 20 
 
 void handle_connection(int sockfd);
 void handle_events(int epollfd, struct epoll_event* events, int num, int sockfd, char* buf);
@@ -45,10 +45,10 @@ int main(int argc, char* argv[])
 void handle_connection(int sockfd)
 {
     int epollfd;
-    struct epoll_event events[EPOLLEVENTS];
+    struct epoll_event events[EPOLLEVENTS]; //数组用于回传要处理的事件
     char buf[MAXSIZE];
     int ret;
-    epollfd = epoll_create(FDSIZE);
+    epollfd = epoll_create(FDSIZE); //生成用于处理 accept 的 epoll 专用的文件描述符
     add_event(epollfd, STDIN_FILENO, EPOLLIN);
     while(1)
     {
@@ -121,7 +121,7 @@ void do_write(int epollfd, int fd, int sockfd, char* buf)
 
 void add_event(int epollfd, int fd,int state)
 {
-    struct epoll_event ev;
+    struct epoll_event ev; //ev 用于注册事件
     ev.events = state;
     ev.data.fd = fd;
     epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &ev);
